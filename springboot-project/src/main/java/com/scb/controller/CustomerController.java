@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +138,15 @@ public class CustomerController {
 	@GetMapping("/customer/fetch/{id}")
 	public Customer fetchById(@PathVariable int id) {
 		return customerService.fetchById(id);
+		/*try {
+			return customerService.fetchById(id);
+		}
+		catch (CustomerServiceException e) {
+			Status status = new Status();
+			status.setStatus(false);
+			status.setMessageIfAny(e.getMessage());
+			return status;
+		}*/
 		//how will we write try catch this time?
 	}
 		
@@ -146,6 +156,12 @@ public class CustomerController {
 		customer.setProfilePic("/customer/fetch/profilePic/"+id);
 		return customer;
 	}
+
+	@GetMapping("/customer/fetchByCity/{city}")
+	public List<Customer> fetchByCity(@PathVariable String city) {
+		return customerService.fetchByCity(city);
+	}
+
 	
 	@GetMapping(path = "/customer/fetch/profilePic/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public byte[] getProfilePic(@PathVariable int id) throws IOException {

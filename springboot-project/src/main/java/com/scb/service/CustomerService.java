@@ -1,5 +1,6 @@
 package com.scb.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,9 @@ public class CustomerService {
 			return customer.get();
 		else
 			throw new CustomerServiceException("Customer with id " + id + " does not exist!");
+	}
+	
+	public List<Customer> fetchByCity(String city) {
+		return customerRepository.findByCity(city);
 	}
 }

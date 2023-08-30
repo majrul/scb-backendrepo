@@ -1,5 +1,6 @@
 package com.scb.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	
 	public Optional<Customer> findByEmail(String email);
 	public Optional<Customer> findByEmailAndPassword(String email, String password);
+	
+	@Query("select c from Customer c join c.address a where a.city = ?1")
+	public List<Customer> findByCity(String city);
 }
